@@ -1,0 +1,78 @@
+﻿<Window x:Class="Module4__Assignment3.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Module4__Assignment3"
+        xmlns:vm="clr-namespace:Module4__Assignment3.ViewModels"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="900">
+    <Window.Resources>
+        <vm:EmployeeViewModel x:Key="empvm"></vm:EmployeeViewModel>
+    </Window.Resources>
+
+    <Grid DataContext="{Binding Source={StaticResource empvm}}" >
+        
+        <TextBox Name="Name" HorizontalAlignment="Left" Height="23" Margin="150,62,0,0" 
+                 TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" 
+                 Text="{Binding Path=emp.Name, Mode=TwoWay}" />
+        <TextBox Name="Age" HorizontalAlignment="Left" Height="23" Margin="150,94,0,0" 
+                 TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" 
+                 Text="{Binding Path=emp.Age, Mode=TwoWay}" />
+        <TextBox Name="Gender" HorizontalAlignment="Left" Height="23" Margin="150,134,0,0" 
+                 TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" 
+                 Text="{Binding Path=emp.Gender, Mode=TwoWay}" />
+        <TextBox Name="Address" HorizontalAlignment="Left" Height="23" Margin="150,176,0,0" 
+                 TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" 
+                 Text="{Binding Path=emp.Address, Mode=TwoWay}" />
+        <TextBox Name="id" HorizontalAlignment="Left" Height="23" Margin="150,284,0,0" 
+                 TextWrapping="Wrap" VerticalAlignment="Top" Width="120"
+                 Text="{Binding Path=EmpId, Mode=TwoWay}" />
+        
+        
+        <Label Name="Lname" Content="Name" HorizontalAlignment="Left" Margin="44,62,0,0" 
+               VerticalAlignment="Top" Width="59"/>
+        <Label Name="Lage" Content="Age" HorizontalAlignment="Left" Margin="44,94,0,0"
+               VerticalAlignment="Top" Width="59"/>
+        <Label Name="Lgender" Content="Gender" HorizontalAlignment="Left" Margin="44,134,0,0"
+               VerticalAlignment="Top" Width="59"/>
+        <Label Name="Laddress" Content="Address" HorizontalAlignment="Left" Margin="44,176,0,0"
+               VerticalAlignment="Top" Width="59" />
+
+        <Button Content="Insert" Name="insert" HorizontalAlignment="Left" Margin="428,333,0,0"
+                VerticalAlignment="Top" Width="75" Height="30"
+                Command="{Binding CreateCommand}" />
+        <Button Content="Update" Name="update" HorizontalAlignment="Left" Margin="528,333,0,0"
+                VerticalAlignment="Top" Width="75" Height="30" 
+                Command="{Binding UpdateCommand}" />
+        <Button Content="Delete" Name="delete"  HorizontalAlignment="Left" Margin="628,333,0,0"
+                VerticalAlignment="Top" Width="75" Height="30"  
+                Command="{Binding DeleteCommand}" />
+        <Button Content="Show" Name="data" HorizontalAlignment="Left" Margin="728,333,0,0" 
+                VerticalAlignment="Top" Width="75" Height="30" 
+                Command="{Binding RetrieveCommand}" />
+        <Button Content="Find" Name="employee" HorizontalAlignment="Left" Margin="180,330,0,0" 
+                VerticalAlignment="Top" Width="75" Height="30" 
+                Command="{Binding SearchCommand}" />
+
+        <DataGrid Name="data_grid" HorizontalAlignment="Left" Height="245" AutoGenerateColumns="False"
+                  VerticalAlignment="Top" Width="463" ColumnWidth="*" Margin="356,62,0,0" 
+                  ItemsSource="{Binding Path=empList, Mode=TwoWay}" >
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="{x:Type DataGridColumnHeader}">
+                    <Setter Property="FontWeight" Value="Bold" />
+                    <Setter Property="FontSize" Value="15" />
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Binding="{Binding Path='Name'}"/>
+                <DataGridTextColumn Header="Age" Binding="{Binding Path=Age}"/>
+                <DataGridTextColumn Header="Gender" Binding="{Binding Path=Gender}"/>
+                <DataGridTextColumn Header="Address" Binding="{Binding Path=Address}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        
+        
+        <Label Name="Lid" Content="ID" HorizontalAlignment="Left" Margin="44,284,0,0" VerticalAlignment="Top" Width="59"/>
+    </Grid>
+</Window>
