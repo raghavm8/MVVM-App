@@ -6,17 +6,17 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 
 namespace Module4__Assignment3.ViewModels
 {
-    class EmployeeViewModel : INotifyPropertyChanged
+    class EmployeeViewModel : INotifyPropertyChanged, IDataErrorInfo
     {
         DataAccess ad = new DataAccess();
 
-        #region variables
-
+        #region EmployeeID
         private int _EmpId;
         public int EmpId
         {
@@ -30,7 +30,9 @@ namespace Module4__Assignment3.ViewModels
                 }
             }
         }
+        #endregion
 
+        #region Employee Object
         private Employee _emp;
         public Employee emp
         {
@@ -44,7 +46,49 @@ namespace Module4__Assignment3.ViewModels
                 }
             }
         }
+        public string this[string columnName]
+        {
+            get
+            {
+                string result = "";
+                if (columnName == "Name")
+                {
+                    if (string.IsNullOrEmpty(emp.Name) == true || string.IsNullOrWhiteSpace(emp.Name) == true)
+                        result = "Name cannot be empty";
+                    if (!Regex.IsMatch(emp.Name, @"^[a-zA-Z]+$"))
+                        result = "Inalid Name";
+                }
 
+                if (columnName == "Age")
+                {
+                    if (!Regex.IsMatch(emp.Age.ToString(), @"^[0-9]+$"))
+                        result = "Inalid Age";
+                    if (emp.Age <= 0)
+                        result = "Age can't be negative or zero";
+                }
+
+                if (columnName == "Gender")
+                {
+                    if (String.IsNullOrEmpty(emp.Gender) || String.IsNullOrWhiteSpace(emp.Gender))
+                        result = "Gender cannot be empty";
+                    if (!Regex.IsMatch(emp.Gender, @"^[a-zA-Z]+$"))
+                        result = "Inalid Gender";
+                }
+
+                if (columnName == "Address")
+                {
+                    if (String.IsNullOrEmpty(emp.Address) || String.IsNullOrWhiteSpace(emp.Address))
+                        result = "Address cannot be empty";
+                    if (!Regex.IsMatch(emp.Address, @"^[a-zA-Z]+$"))
+                        result = "Inalid Address";
+                }
+
+                return result;
+            }
+        }
+        #endregion
+
+        #region Employee List
         private ObservableCollection<Employee> _empList;
         public ObservableCollection<Employee> empList
         {
@@ -119,5 +163,6 @@ namespace Module4__Assignment3.ViewModels
         #endregion
 
         public event PropertyChangedEventHandler PropertyChanged;
+        public string Error => throw new NotImplementedException();
     }
 }

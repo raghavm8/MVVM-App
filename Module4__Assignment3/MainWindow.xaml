@@ -5,26 +5,42 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Module4__Assignment3"
         xmlns:vm="clr-namespace:Module4__Assignment3.ViewModels"
+        xmlns:model="clr-namespace:Module4__Assignment3.Models"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="900">
     <Window.Resources>
         <vm:EmployeeViewModel x:Key="empvm"></vm:EmployeeViewModel>
+        <!--<model:Employee x:Key="empm"></model:Employee>-->
+
+        <Style TargetType="TextBox" x:Key="txtbox">
+            <Setter Property="Height" Value="23" />
+            <Setter Property="Width" Value="120" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="BorderBrush" Value="Red"/>
+                    <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors)[0].ErrorContent}"></Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
 
     <Grid DataContext="{Binding Source={StaticResource empvm}}" >
         
-        <TextBox Name="Name" HorizontalAlignment="Left" Height="23" Margin="150,62,0,0" 
-                 TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" 
-                 Text="{Binding Path=emp.Name, Mode=TwoWay}" />
-        <TextBox Name="Age" HorizontalAlignment="Left" Height="23" Margin="150,94,0,0" 
-                 TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" 
-                 Text="{Binding Path=emp.Age, Mode=TwoWay}" />
-        <TextBox Name="Gender" HorizontalAlignment="Left" Height="23" Margin="150,134,0,0" 
-                 TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" 
-                 Text="{Binding Path=emp.Gender, Mode=TwoWay}" />
-        <TextBox Name="Address" HorizontalAlignment="Left" Height="23" Margin="150,176,0,0" 
-                 TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" 
-                 Text="{Binding Path=emp.Address, Mode=TwoWay}" />
+        <TextBox Name="Name" Margin="150,62,0,0" TextWrapping="Wrap" Style="{StaticResource txtbox}"
+                 Text="{Binding Path=emp.Name, Mode=TwoWay, ValidatesOnDataErrors=True, 
+                 UpdateSourceTrigger=PropertyChanged}" />
+        <TextBox Name="Age" Margin="150,94,0,0" TextWrapping="Wrap" Style="{StaticResource txtbox}"
+                 Text="{Binding Path=emp.Age, Mode=TwoWay, ValidatesOnDataErrors=True, 
+                 UpdateSourceTrigger=PropertyChanged}" />
+        <TextBox Name="Gender" Margin="150,134,0,0" TextWrapping="Wrap" Style="{StaticResource txtbox}"
+                 Text="{Binding Path=emp.Gender, Mode=TwoWay, ValidatesOnDataErrors=True, 
+                 UpdateSourceTrigger=PropertyChanged}" />
+        <TextBox Name="Address" Margin="150,176,0,0" TextWrapping="Wrap" Style="{StaticResource txtbox}"
+                 Text="{Binding Path=emp.Address, Mode=TwoWay, ValidatesOnDataErrors=True, 
+                 UpdateSourceTrigger=PropertyChanged}" />
+        
         <TextBox Name="id" HorizontalAlignment="Left" Height="23" Margin="150,284,0,0" 
                  TextWrapping="Wrap" VerticalAlignment="Top" Width="120"
                  Text="{Binding Path=EmpId, Mode=TwoWay}" />
@@ -65,7 +81,7 @@
                 </Style>
             </DataGrid.ColumnHeaderStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Name" Binding="{Binding Path='Name'}"/>
+                <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}"/>
                 <DataGridTextColumn Header="Age" Binding="{Binding Path=Age}"/>
                 <DataGridTextColumn Header="Gender" Binding="{Binding Path=Gender}"/>
                 <DataGridTextColumn Header="Address" Binding="{Binding Path=Address}"/>

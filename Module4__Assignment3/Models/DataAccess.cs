@@ -13,7 +13,7 @@ namespace Module4__Assignment3.Models
     class DataAccess
     {
         SqlConnection con = new SqlConnection("Data Source = SONY\\RAGHAV; Initial Catalog = EmployeeWPF; User ID = sa; Password =raghav");
-       
+
         internal ObservableCollection<Employee> getData()
         {
             ObservableCollection<Employee> lst = new ObservableCollection<Employee>();
@@ -38,7 +38,7 @@ namespace Module4__Assignment3.Models
 
                 return lst;
             }
-            catch(SqlException ex)
+            catch (SqlException ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -48,7 +48,7 @@ namespace Module4__Assignment3.Models
             }
             return lst;
         }
-   
+
         internal void postData(Employee e)
         {
             try
@@ -65,7 +65,7 @@ namespace Module4__Assignment3.Models
                 cmd.ExecuteNonQuery();
                 con.Close();
             }
-            catch(SqlException ex)
+            catch (SqlException ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -122,15 +122,15 @@ namespace Module4__Assignment3.Models
             try
             {
                 con.Open();
-                
+
                 string equation = "update EmpData set Name = '" + e.Name + "',Age = '" + e.Age + "',Gender = '" + e.Gender + "',Address = '" + e.Address + "' where Id= '" + empId + "'";
-                SqlCommand cmd = new SqlCommand(equation, con); 
+                SqlCommand cmd = new SqlCommand(equation, con);
                 cmd.ExecuteNonQuery();
 
                 equation = "Select * from EmpData where Id = '" + empId + "'";
                 cmd = new SqlCommand(equation, con);
                 cmd.ExecuteNonQuery();
-                
+
                 SqlDataReader reader = cmd.ExecuteReader();
 
                 while (reader.Read())
@@ -162,11 +162,11 @@ namespace Module4__Assignment3.Models
             try
             {
                 con.Open();
-                
+
                 string equation = "Delete from EmpData where Id=" + empId;
                 SqlCommand cmd = new SqlCommand(equation, con);
                 cmd.ExecuteNonQuery();
-                
+
                 con.Close();
             }
             catch (SqlException ex)
